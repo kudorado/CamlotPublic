@@ -1,7 +1,7 @@
 # commit to csv_data
 #!/usr/bin/env bash
 
-URL=https://github.com/kudorado/CL.git
+URL=https://github.com/kudorado/CamlotPublic.git
 FOLDER=vietlott-data
 DATA_FOLDER=data
 USER="Kudorado"
