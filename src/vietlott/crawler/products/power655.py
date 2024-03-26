@@ -149,10 +149,11 @@ class ProductPower655(BaseProduct):
         creds = ServiceAccountCredentials.from_json_keyfile_name("src/creds.json", scope)
         client = gspread.authorize(creds)
 
-        sheet  = client.open("CL").sheet1
-        sheet655  = client.open("CL").worksheet("Mega 655")
-        sheet645  = client.open("CL").worksheet("Mega 645")
-        sheet3d  = client.open("CL").worksheet("Max3D")
+        sheetname = "Camlot"
+        sheet  = client.open(sheetname).sheet1
+        sheet655  = client.open(sheetname).worksheet("Mega 655")
+        sheet645  = client.open(sheetname).worksheet("Mega 645")
+        sheet3d  = client.open(sheetname).worksheet("Max3D")
 
         # rv = sheet.row_values(2)
         # logger.info(f"dick data: {rv}")
