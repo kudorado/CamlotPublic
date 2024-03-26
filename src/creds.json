@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "root-cortex-418408",
+  "private_key_id": "6510c8da96bebd270f8188949f7604b095079ebd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCpQSko0ShrnIBT\nmte4lsNDQjky9++P9IVH/6Coxm/LWq5mTikhQ/4o9BABnFX0JQFlrBuCQyBHF4LI\nAQRGEtqyN0CN0WmQ2S/OA18+IPpVL+j5wvWbpxdF0bjdqJ/a1kcxYwZ6P+MD6zyy\nKGEQCdMcEnQRpfPdGs70cgP3ZOggIPqi65Fmq7lfxjJSknr7HCGgN+gfHpIjW9zb\nTjS5sgsblqjLACcFHODMUNwLCPJ1Acn+b5KkdTOLVsfP7vzooIdVcpiRL1AXNajU\n9jo4Z0jUn2u6rAsb8lVZuvq6Z0tLlglNxjwzDGwyQiDJXV+5Jw3PJ89UQMX/FQO3\nbKRT4rr/AgMBAAECggEASOJf9I05EDoJArebrIfzltuGIR4mYcHEwS/hwbwN+S5Y\nCoMe8A3E/WK4H9FwLB3hX6SBBhOc6zBDJ5hUfE5zMapcWJW0lWUJUngeQ/VUh2mF\ntEQRmtEV0wGQT5dlGwoKB0jiybMIMbBTZ06/GXZ5m82QgOcLQAvi0d3lOlwQH4EP\nkaYI2MJowaU75jXytWNCpq3yEN7ev8DYEzgNK60Ypfi8IoEKkAFVVCu7ph4yfmZC\nfIqqZAU9re7dGp6NQ81deTBVBeClrSMPOIDKRITCY4h6f9/5s7Z+Zy1kipa7xNTb\nM7TcxBhEela88X2EvREmSD0ca45lX9fFd3AnIRpZXQKBgQDqcuOYZgkB0ScNCiCd\noG2wDeq3jGJT3DEcdq8M42iXNrRwqAMkUPVevHzH0W/qoVA3KMlH/dkUQbxCRCwB\nPGLbQFCknuqFyir3t4EZzSglNO3y9lwhuPmCTDXH/G+r7Xv2kPryzULr2S5hJKGg\n9vJop5WGFnyICidyAVe77hfHAwKBgQC40Bp0f4+FviCJDna1mNrh8d6D/PaHTcLG\nj5J7+n8PWXLGfLx1xAHL5WAIuWSOy4AJjxRf4UoixOy/DWUytDaVza5tD8/N6J43\nZy2hXJ6G8fSpPCxf/CdheyoeLGtER5FvV///xb2q3iXwKag1XfLG11MueuJ/0eA+\n1yBoysuNVQKBgF/k+j69jXWWzPhCajDPC851Aspsu1M9v0C7MsJ8ya0ADTH/JrnV\n+2byhb9dZP99V8gYAKxXolDsykn4hF9FCdJQLiwHbDmpBYYpIr8g8Qi265TzO5/3\nfubSsTTJhgu2qXuitWJWnsbFIHlPeGTUXTZ9RWWBERK7xIKXFgGiU0ttAoGANBoX\nGzjLEX1kVr9JIDETpBc4ECXEqqh1fN0FAwa/w2gIP4Ty7JBxoTXtOQhrHQap9gfs\nSouNBvhVdhckrIK50MnHnt+SSg6GbEAeURt3ZbvYqc1ZBUZlI8pBOXh0VS+IBMfe\nWBE7Q2yVbXuQ/FqcEwqpXLUwHbDhc1XawTBK6nECgYAh27ZmXJBgiJwoJlVQEE/z\nKxPzIEbbSvcb93JmMopV+TMRqEmG12Er3RE5eRkx9Nj+LiINieyHmiJ8/yL21yXj\nISo+AV/S+JY6CLbWkdn+v0DPSixpnKMstR2eg5v9nc3ia441uJo7k8QgRWpdPunq\nEVyHwrQw5+FdqgSARX+5Ww==\n-----END PRIVATE KEY-----\n",
+  "client_email": "camlot@root-cortex-418408.iam.gserviceaccount.com",
+  "client_id": "100189132694800676893",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/camlot%40root-cortex-418408.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
