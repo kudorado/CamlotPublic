@@ -51,6 +51,20 @@ class Keno:
     number: str = field(default="")
 
 
+
+
+@define
+class Bingo:
+    DrawDate: str = field(default="")
+    GameDrawNo: str = field(default="")
+    GameId: str = field(default="")
+    ORenderInfo: ORenderInfoCls = field(default=ORenderInfoCls())
+    PageIndex: int = field(default=1)
+    TotalRow: int = field(default=10)
+    number: str = field(default="")
+
+
+
 @define
 class Max3D:
     ORenderInfo: ORenderInfoCls = field(default=ORenderInfoCls())

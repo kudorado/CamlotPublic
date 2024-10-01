@@ -7,3 +7,4 @@ from .power645 import ProductPower645
 from .power655 import ProductPower655
 from .keno import ProductKeno
 from .max3d import ProductMax3D
+from .bingo import ProductBingo

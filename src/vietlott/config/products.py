@@ -52,6 +52,19 @@ keno_config = ProductConfig(
     page_size=6,
     use_cookies=False,
 )
+bingo_config = ProductConfig(
+    name="bingo",
+    raw_path=data_dir / "bingo.jsonl",
+    min_value=3,
+    max_value=18,
+    size_output=6,
+    interval=timedelta(days=2),
+    default_index_to=24,
+    num_thread=20,
+    page_size=6,
+    use_cookies=False,
+)
+
 
 max3d_config = ProductConfig(
     name="max3d",
@@ -68,7 +81,7 @@ max3d_config = ProductConfig(
 
 
 product_config_map = {
-    c.name: c for c in [power645_config, power655_config, keno_config, max3d_config]
+    c.name: c for c in [power645_config, power655_config, keno_config, max3d_config, bingo_config]
 }
 
 
