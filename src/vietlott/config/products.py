@@ -81,7 +81,7 @@ max3d_config = ProductConfig(
 
 
 product_config_map = {
-    c.name: c for c in [power645_config, power655_config, keno_config, max3d_config, keno_config]
+    c.name: c for c in [power645_config, power655_config, keno_config, max3d_config, bingo_config]
 }
 
 
