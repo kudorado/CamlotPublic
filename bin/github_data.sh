@@ -13,10 +13,7 @@ echo "pwd $(pwd)"
 export PYTHONPATH="src"
 export LOGURU_LEVEL="INFO"
 
-python src/vietlott/cli/crawl.py keno
-python src/vietlott/cli/crawl.py power_655
 python src/vietlott/cli/crawl.py power_645
-python src/vietlott/cli/crawl.py bingo
 
 python src/render_readme.py
 
