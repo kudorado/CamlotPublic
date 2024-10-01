@@ -149,18 +149,18 @@ class ProductPower655(BaseProduct):
        
 
         results = pool.map(fetch_fn, tasks)
-        gcp_credentials = os.getenv("GOOGLE_CREDENTIALS")
-        creds_dict = json.loads(gcp_credentials)
-        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
-        # creds = ServiceAccountCredentials.from_json_keyfile_name("src/creds.json", scope)
-        creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
-        client = gspread.authorize(creds)
+        # gcp_credentials = os.getenv("GOOGLE_CREDENTIALS")
+        # creds_dict = json.loads(gcp_credentials)
+        # scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/drive"]
+        # # creds = ServiceAccountCredentials.from_json_keyfile_name("src/creds.json", scope)
+        # creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+        # client = gspread.authorize(creds)
 
-        sheetname = "Camlot"
-        sheet  = client.open(sheetname).sheet1
-        sheet655  = client.open(sheetname).worksheet("Mega 655")
-        sheet645  = client.open(sheetname).worksheet("Mega 645")
-        sheet3d  = client.open(sheetname).worksheet("Max3D")
+        # sheetname = "Camlot"
+        # sheet  = client.open(sheetname).sheet1
+        # sheet655  = client.open(sheetname).worksheet("Mega 655")
+        # sheet645  = client.open(sheetname).worksheet("Mega 645")
+        # sheet3d  = client.open(sheetname).worksheet("Max3D")
 
         # rv = sheet.row_values(2)
         # logger.info(f"dick data: {rv}")
@@ -227,98 +227,98 @@ class ProductPower655(BaseProduct):
         logger.info(f'total ID crawl: {len(ids)}')
         logger.info(f'Dick Iz: {self.name}')
 
-        if self.name == "keno":
-            for di in range(l):
-                # rv = sheet.row_count
-                v = vip - di
-                r = di + 2
+        # if self.name == "keno":
+        #     for di in range(l):
+        #         # rv = sheet.row_count
+        #         v = vip - di
+        #         r = di + 2
 
-                rs = rss[v]
-                ds = dss[v]
-                idick = ids[v]
+        #         rs = rss[v]
+        #         ds = dss[v]
+        #         idick = ids[v]
 
 
-                # logger.info(f'shit ID: {idick}')
-                # logger.info(f'shit Date: {ds}')
-                # logger.info(f'shit RESULTS: {rs}')
+        #         # logger.info(f'shit ID: {idick}')
+        #         # logger.info(f'shit Date: {ds}')
+        #         # logger.info(f'shit RESULTS: {rs}')
 
-                insertrow = [ids[v], ds]
-                for x in range(80):
-                    if (x + 1) in rs:
-                        insertrow.append('')
-                    else:
-                        insertrow.append((x + 1))
+        #         insertrow = [ids[v], ds]
+        #         for x in range(80):
+        #             if (x + 1) in rs:
+        #                 insertrow.append('')
+        #             else:
+        #                 insertrow.append((x + 1))
                 
-                # sheet.insert_row(insertrow, r)
-                ar.append(insertrow)
-                # logger.info(f'Insert data: {insertrow}')
-            sheet.resize(1)
-            sheet.resize(2)
-            sheet.insert_rows(ar, 2)
+        #         # sheet.insert_row(insertrow, r)
+        #         ar.append(insertrow)
+        #         # logger.info(f'Insert data: {insertrow}')
+        #     sheet.resize(1)
+        #     sheet.resize(2)
+        #     sheet.insert_rows(ar, 2)
 
-        elif self.name == "power_655":
-            rss = current_data["result"]
-            dss = current_data["date"]
-            ids = current_data["id"]
-            l = len(ids)
-            vip = l - 1
-            for di in range(l):
-                v = vip - di
-                r = di + 2
+        # elif self.name == "power_655":
+        #     rss = current_data["result"]
+        #     dss = current_data["date"]
+        #     ids = current_data["id"]
+        #     l = len(ids)
+        #     vip = l - 1
+        #     for di in range(l):
+        #         v = vip - di
+        #         r = di + 2
 
-                rs = rss[di]
-                ds = dss[di]
-                idick = ids[di]
+        #         rs = rss[di]
+        #         ds = dss[di]
+        #         idick = ids[di]
 
 
-                # logger.info(f'shit ID: {idick}')
-                # logger.info(f'shit Date: {ds}')
-                # logger.info(f'shit RESULTS: {rs}')
+        #         # logger.info(f'shit ID: {idick}')
+        #         # logger.info(f'shit Date: {ds}')
+        #         # logger.info(f'shit RESULTS: {rs}')
 
-                insertrow = [ids[di], ds]
-                for x in range(55):
-                    if (x + 1) in rs:
-                        insertrow.append('')
-                    else:
-                        insertrow.append((x + 1))
+        #         insertrow = [ids[di], ds]
+        #         for x in range(55):
+        #             if (x + 1) in rs:
+        #                 insertrow.append('')
+        #             else:
+        #                 insertrow.append((x + 1))
                 
-                ar.append(insertrow)
-            sheet655.resize(1)
-            sheet655.resize(2)
-            sheet655.insert_rows(ar, 2)
-        elif self.name == "power_645":
-            rss = current_data["result"]
-            dss = current_data["date"]
-            ids = current_data["id"]
-            l = len(ids)
-            vip = l - 1
-            for di in range(l):
-                v = vip - di
-                r = di + 2
+        #         ar.append(insertrow)
+        #     sheet655.resize(1)
+        #     sheet655.resize(2)
+        #     sheet655.insert_rows(ar, 2)
+        # elif self.name == "power_645":
+        #     rss = current_data["result"]
+        #     dss = current_data["date"]
+        #     ids = current_data["id"]
+        #     l = len(ids)
+        #     vip = l - 1
+        #     for di in range(l):
+        #         v = vip - di
+        #         r = di + 2
 
-                rs = rss[di]
-                ds = dss[di]
-                idick = ids[di]
+        #         rs = rss[di]
+        #         ds = dss[di]
+        #         idick = ids[di]
 
 
-                # logger.info(f'shit ID: {idick}')
-                # logger.info(f'shit Date: {ds}')
-                # logger.info(f'shit RESULTS: {rs}')
+        #         # logger.info(f'shit ID: {idick}')
+        #         # logger.info(f'shit Date: {ds}')
+        #         # logger.info(f'shit RESULTS: {rs}')
 
-                insertrow = [ids[di], ds]
-                for x in range(45):
-                    if (x + 1) in rs:
-                        insertrow.append('')
-                    else:
-                        insertrow.append((x + 1))
+        #         insertrow = [ids[di], ds]
+        #         for x in range(45):
+        #             if (x + 1) in rs:
+        #                 insertrow.append('')
+        #             else:
+        #                 insertrow.append((x + 1))
                 
-                ar.append(insertrow)
-            sheet645.resize(1)
-            sheet645.resize(2)
-            sheet645.insert_rows(ar, 2)
+        #         ar.append(insertrow)
+        #     sheet645.resize(1)
+        #     sheet645.resize(2)
+        #     sheet645.insert_rows(ar, 2)
 
-        elif self.name == "max3d":
-            logger.info(f'shit: ' + current_data['number01'])
+        # elif self.name == "max3d":
+        #     logger.info(f'shit: ' + current_data['number01'])
             # rss = current_data["result"]
             # dss = current_data["date"]
             # ids = current_data["id"]
