@@ -268,8 +268,8 @@ class ProductPower655(BaseProduct):
                     logger.info(f"count_non_bigwin incremented to {count_non_bigwin}")
 
                 # Check if the counter reaches SoTour
-                if count_non_bigwin >= SoTour:
-                    logger.info(f"Vao Tour {SoTour} Danh: {SoMuonDanh}")
+                if (count_non_bigwin + 1) >= SoTour:
+                    logger.info(f"Dô ăn cơm bạn ei{SoTour} Đánh con: {SoMuonDanh} cho tôi, bao ăn...")
                     count_non_bigwin = 0  # Reset counter after logging
 
         #     for di in range(l):
