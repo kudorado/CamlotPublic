@@ -29,5 +29,7 @@ jobs:
       - name: Run script with Google credentials
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}  # Pass the secret as an environment variable
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: |
           bash ./bin/github_data.sh  # Make sure your script can handle the GOOGLE_CREDENTIALS variable
