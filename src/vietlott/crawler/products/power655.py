@@ -75,36 +75,36 @@ class ProductPower655(BaseProduct):
     def __init__(self):
         super(ProductPower655, self).__init__()
 
-    def send_email():
-        # Get the email and password from environment variables
+    def send_email(SoMuonDanh, count_non_bigwin, SoTour):
+        # Get email credentials from environment variables
         email_user = os.environ.get('EMAIL_USER')
         email_password = os.environ.get('EMAIL_PASSWORD')
 
         if not email_user or not email_password:
-            raise ValueError("Email credentials are missing!")
+            logger.error("Email credentials are missing!")
+            return
 
-        # Specify the email details
-        subject = "Notification from GitHub Action"
-        body = "Dô ăn cơm bạn ei, Đánh con: ... cho tôi, bao ăn..."
+        # Set up the email details
+        subject = "Tour Notification - Big Win!"
+        body = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
 
-        # Set up the email content
+        # Prepare email
         msg = MIMEMultipart()
         msg['From'] = email_user
-        msg['To'] = 'ngocphuong.hoangkim@gmail.com'  # Change this to the recipient's email
+        msg['To'] = 'recipient@example.com'  # Replace with the actual recipient's email
         msg['Subject'] = subject
-
         msg.attach(MIMEText(body, 'plain'))
 
-        # Set up the SMTP server and send the email
         try:
+            # Setup SMTP server connection
             with smtplib.SMTP('smtp.gmail.com', 587) as server:
                 server.starttls()
                 server.login(email_user, email_password)
                 text = msg.as_string()
-                server.sendmail(email_user, 'ngocphuong.hoangkim@gmail.com', text)
-                print("Email sent successfully!")
+                server.sendmail(email_user, 'recipient@example.com', text)
+                logger.info("Email sent successfully!")
         except Exception as e:
-            print(f"Error sending email: {e}")
+            logger.error(f"Failed to send email: {e}")
 
     def process_result(self, params, body, res_json, task_data) -> List[Dict]:
         """
