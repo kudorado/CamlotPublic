@@ -254,19 +254,18 @@ class ProductPower655(BaseProduct):
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
                 result = truncated_rss.iloc[i]  # Get the current result
+                sum_result = sum(result)    
 
                 # Log the current result for debugging purposes
-                logger.info(f"Processing result {i+1}/{len(truncated_rss)}: {result}")
-                sum_result = sum(result)    
-                logger.info(f"Sum of result {result} is {sum_result}")
+                logger.info(f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}" )
 
                 # Check if any of the results are in the BigWin list
                 if sum_result in BigWin:
                     count_non_bigwin = 0  # Reset counter if a BigWin number is found
-                    logger.info(f"Big Win found in result {result} (sum: {sum_result}), resetting counter")
+                    logger.info(f"{count_non_bigwin}/{SoTour}")
                 else:
                     count_non_bigwin += 1  # Increment counter if no BigWin is found
-                    logger.info(f"count_non_bigwin incremented to {count_non_bigwin}")
+                    logger.info(f"{count_non_bigwin}/{SoTour}")
 
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 1) >= SoTour:
