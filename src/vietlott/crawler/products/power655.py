@@ -91,7 +91,7 @@ class ProductPower655(BaseProduct):
         # Prepare email
         msg = MIMEMultipart()
         msg['From'] = email_user
-        msg['To'] = 'recipient@example.com'  # Replace with the actual recipient's email
+        msg['To'] = 'ngocphuong.hoangkim@gmail.com'  # Replace with the actual recipient's email
         msg['Subject'] = subject
         msg.attach(MIMEText(body, 'plain'))
 
@@ -101,7 +101,7 @@ class ProductPower655(BaseProduct):
                 server.starttls()
                 server.login(email_user, email_password)
                 text = msg.as_string()
-                server.sendmail(email_user, 'recipient@example.com', text)
+                server.sendmail(email_user, 'ngocphuong.hoangkim@gmail.com', text)
                 logger.info("Email sent successfully!")
         except Exception as e:
             logger.error(f"Failed to send email: {e}")
@@ -152,7 +152,7 @@ class ProductPower655(BaseProduct):
             if null then using default index_to in product's config
         """
         self.send_email(0, 0, 0)
-        
+
         if index_to is None:
             index_to = self.product_config.default_index_to
 
