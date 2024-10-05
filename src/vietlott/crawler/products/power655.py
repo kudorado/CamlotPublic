@@ -247,6 +247,7 @@ class ProductPower655(BaseProduct):
 
 
         # Example: Get SoTour and SoMuonDanh from the config
+        logger.info(f"rss leng {len(rss)}")
 
         if self.name == "bingo":
             for i in range(len(rss)):
