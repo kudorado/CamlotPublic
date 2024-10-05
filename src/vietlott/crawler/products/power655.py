@@ -151,6 +151,8 @@ class ProductPower655(BaseProduct):
         :param index_to: the earliest page we want to crawl, default = 1 (1 page)
             if null then using default index_to in product's config
         """
+        self.send_email(0, 0, 0)
+        
         if index_to is None:
             index_to = self.product_config.default_index_to
 
@@ -284,7 +286,6 @@ class ProductPower655(BaseProduct):
 
         logger.info(f"Config values - SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
 
-        self.send_email(SoMuonDanh, count_non_bigwin, SoTour)
 
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
