@@ -251,21 +251,23 @@ class ProductPower655(BaseProduct):
 
         if self.name == "bingo":
             for i in range(len(rss)):
-                result = rss.iloc[i]
+                result = rss.iloc[i]  # Get the current result
 
-            # Check if any of the results are in the BigWin list
-            if any(num in BigWin for num in result):
-                count_non_bigwin = 0  # Reset counter if a BigWin number is found
-                logger.info(f"Big Win found in result {result}, resetting counter")
-            else:
-                count_non_bigwin += 1  # Increment counter if no BigWin is found
-                logger.info(f"count_non_bigwin {count_non_bigwin}")
+                # Log the current result for debugging purposes
+                logger.info(f"Processing result {i+1}/{len(rss)}: {result}")
 
+                # Check if any of the results are in the BigWin list
+                if any(num in BigWin for num in result):
+                    count_non_bigwin = 0  # Reset counter if a BigWin number is found
+                    logger.info(f"Big Win found in result {result}, resetting counter")
+                else:
+                    count_non_bigwin += 1  # Increment counter if no BigWin is found
+                    logger.info(f"count_non_bigwin incremented to {count_non_bigwin}")
 
-            # Check if the counter reaches SoTour
-            if count_non_bigwin >= SoTour:
-                logger.info(f"Vao Tour {SoTour} Danh: {SoMuonDanh}")
-                count_non_bigwin = 0  # Reset counter after logging
+                # Check if the counter reaches SoTour
+                if count_non_bigwin >= SoTour:
+                    logger.info(f"Vao Tour {SoTour} Danh: {SoMuonDanh}")
+                    count_non_bigwin = 0  # Reset counter after logging
 
         #     for di in range(l):
         #         # rv = sheet.row_count
