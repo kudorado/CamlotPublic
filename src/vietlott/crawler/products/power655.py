@@ -323,7 +323,8 @@ class ProductPower655(BaseProduct):
                         logger.info(cur_info)
                         self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
     
-                    # else:
+                    else:
+                        camlot_data = "" 
                     #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
 
                 if is_big_win:
