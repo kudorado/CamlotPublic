@@ -33,6 +33,7 @@ class ProductPower655(BaseProduct):
         "page": int,
         "process_time": str,
     }
+    
 
     orender_info_default = ORenderInfoCls(
         SiteId="main.frontend.vi",
@@ -216,7 +217,7 @@ class ProductPower655(BaseProduct):
 
         df_final = df_final.sort_values(by=["date", "id"])
     
-
+        BigWin = [3, 4, 5, 6, 9, 12, 15, 16, 17, 18]
         ids = df_crawled["id"]
         rss = df_crawled["result"]
         dss = df_crawled["date"]
@@ -226,8 +227,43 @@ class ProductPower655(BaseProduct):
 
         logger.info(f'total ID crawl: {len(ids)}')
         logger.info(f'Dick Iz: {self.name}')
+        config_file = "data/KeHoach.txt"
+        SoTour = 0
+        SoMuonDanh = 0
+        try:
+            with open(config_file, "r") as file:
+                for line in file:
+                    if "SoTour=" in line:
+                        SoTour = int(line.strip().split("=")[1])
+                    elif "SoMuonDanh=" in line:
+                        SoMuonDanh = int(line.strip().split("=")[1])
+        except FileNotFoundError:
+            logger.error(f"Configuration file {config_file} not found.")
+        except ValueError:
+            logger.error("Error parsing integer values from the configuration file.")
 
-        # if self.name == "keno":
+        logger.info(f"Config values - SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
+
+
+
+        # Example: Get SoTour and SoMuonDanh from the config
+
+        if self.name == "bingo":
+            for i in range(len(rss)):
+                result = rss.iloc[i]
+
+            # Check if any of the results are in the BigWin list
+            if any(num in BigWin for num in result):
+                count_non_bigwin = 0  # Reset counter if a BigWin number is found
+                logger.info(f"Big Win found in result {result}, resetting counter")
+            else:
+                count_non_bigwin += 1  # Increment counter if no BigWin is found
+
+            # Check if the counter reaches SoTour
+            if count_non_bigwin >= SoTour:
+                logger.info(f"Vao Tour {SoTour} Danh: {SoMuonDanh}")
+                count_non_bigwin = 0  # Reset counter after logging
+
         #     for di in range(l):
         #         # rv = sheet.row_count
         #         v = vip - di
@@ -352,3 +388,4 @@ class ProductPower655(BaseProduct):
             self.product_config.raw_path.absolute(), orient="records", lines=True
         )
         logger.info(f"wrote to file {self.product_config.raw_path.absolute()}")
+   
