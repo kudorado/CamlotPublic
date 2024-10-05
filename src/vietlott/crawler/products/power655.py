@@ -281,11 +281,13 @@ class ProductPower655(BaseProduct):
         logger.info(f"Config values - SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
 
 
-
+        
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
         max_length = 100
         truncated_rss = current_data["result"]  # Select the last 50 rows
+        self.send_email(SoMuonDanh, count_non_bigwin, SoTour)
+        
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
                 result = truncated_rss.iloc[i]  # Get the current result
