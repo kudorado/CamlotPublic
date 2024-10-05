@@ -218,7 +218,6 @@ class ProductPower655(BaseProduct):
         df_final = df_final.sort_values(by=["date", "id"])
     
         BigWin = [ 4, 5, 16, 17]
-        SumWin = [ 3, 6, 9, 12, 15]
 
         ids = df_crawled["id"]
         rss = df_crawled["result"]
@@ -271,7 +270,10 @@ class ProductPower655(BaseProduct):
 
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 1) >= SoTour:
-                    logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
+                    if i == len(truncated_rss) - 1:
+                        logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
+                    else:
+                        logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
                     count_non_bigwin = 0  # Reset counter after logging
 
         #     for di in range(l):
