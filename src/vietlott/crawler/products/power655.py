@@ -331,7 +331,7 @@ class ProductPower655(BaseProduct):
                     count_non_bigwin = 0  # Reset counter after logging
                     
                     
-        self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
+        # self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
 
         #     for di in range(l):
         #         # rv = sheet.row_count
