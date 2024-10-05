@@ -251,7 +251,7 @@ class ProductPower655(BaseProduct):
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
         max_length = 100
-        truncated_rss = rss.iloc[-max_length:]  # Select the last 50 rows
+        truncated_rss = rss  # Select the last 50 rows
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
                 result = truncated_rss.iloc[i]  # Get the current result
@@ -272,7 +272,7 @@ class ProductPower655(BaseProduct):
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 1) >= SoTour:
                     if i == len(truncated_rss) - 1 and (count_non_bigwin + 1) == SoTour:
-                        logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
+                            logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
                     # else:
                     #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
 
