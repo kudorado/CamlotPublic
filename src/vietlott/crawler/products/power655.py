@@ -73,6 +73,8 @@ class ProductPower655(BaseProduct):
 
     def send_email(SoMuonDanh, count_non_bigwin, SoTour):
         # Get email credentials from environment variables
+        logger.info("Email preparing!")
+
         email_user = os.environ.get('EMAIL_USER')
         email_password = os.environ.get('EMAIL_PASSWORD')
 
