@@ -217,7 +217,9 @@ class ProductPower655(BaseProduct):
 
         df_final = df_final.sort_values(by=["date", "id"])
     
-        BigWin = [3, 4, 5, 6, 9, 12, 15, 16, 17, 18]
+        BigWin = [ 4, 5, 16, 17]
+        SumWin = [ 3, 6, 9, 12, 15]
+
         ids = df_crawled["id"]
         rss = df_crawled["result"]
         dss = df_crawled["date"]
@@ -249,7 +251,7 @@ class ProductPower655(BaseProduct):
 
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
-        max_length = 50
+        max_length = 100
         truncated_rss = rss.iloc[-max_length:]  # Select the last 50 rows
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
@@ -260,7 +262,7 @@ class ProductPower655(BaseProduct):
                 logger.info(f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}" )
 
                 # Check if any of the results are in the BigWin list
-                if sum_result in BigWin:
+                if sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3):
                     count_non_bigwin = 0  # Reset counter if a BigWin number is found
                     logger.info(f"{count_non_bigwin}/{SoTour}")
                 else:
