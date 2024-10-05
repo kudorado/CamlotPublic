@@ -259,9 +259,10 @@ class ProductPower655(BaseProduct):
 
                 # Log the current result for debugging purposes
                 logger.info(f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}" )
+                is_big_win = sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3)
 
                 # Check if any of the results are in the BigWin list
-                if sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3):
+                if is_big_win:
                     count_non_bigwin = 0  # Reset counter if a BigWin number is found
                     logger.info(f"{count_non_bigwin}/{SoTour}")
                 else:
@@ -274,7 +275,10 @@ class ProductPower655(BaseProduct):
                         logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
                     else:
                         logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
+
+                if is_big_win:
                     count_non_bigwin = 0  # Reset counter after logging
+                    
 
         #     for di in range(l):
         #         # rv = sheet.row_count
