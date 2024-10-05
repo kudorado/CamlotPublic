@@ -258,6 +258,8 @@ class ProductPower655(BaseProduct):
                 logger.info(f"Big Win found in result {result}, resetting counter")
             else:
                 count_non_bigwin += 1  # Increment counter if no BigWin is found
+                logger.info(f"count_non_bigwin {count_non_bigwin}")
+
 
             # Check if the counter reaches SoTour
             if count_non_bigwin >= SoTour:
