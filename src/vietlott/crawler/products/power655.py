@@ -188,7 +188,7 @@ class ProductPower655(BaseProduct):
         df_take = None  # Initialize df_take with a default value
         # store data
         if self.product_config.raw_path.exists():
-            current_data = pd.read_json(
+            current_data = pd.read_json(crawled
                 self.product_config.raw_path, lines=True, dtype=self.stored_data_dtype
             )
             logger.info(
@@ -251,7 +251,7 @@ class ProductPower655(BaseProduct):
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
         max_length = 100
-        truncated_rss = df_take["result"]  # Select the last 50 rows
+        truncated_rss = current_data["result"]  # Select the last 50 rows
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
                 result = truncated_rss.iloc[i]  # Get the current result
