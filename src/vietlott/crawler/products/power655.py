@@ -252,16 +252,14 @@ class ProductPower655(BaseProduct):
 
         if self.name == "bingo":
             for i in range(len(rss)):
-                result = rss.iloc[i].tolist()  # Get the current result and convert to a list
+                result = rss.iloc[i]  # Get the current result
 
                 # Log the current result for debugging purposes
                 logger.info(f"Processing result {i+1}/{len(rss)}: {result}")
-
-                # Calculate the sum of the result numbers
-                sum_result = sum(result)
+                sum_result = sum(result)    
                 logger.info(f"Sum of result {result} is {sum_result}")
 
-                # Check if the sum is in the BigWin list
+                # Check if any of the results are in the BigWin list
                 if sum_result in BigWin:
                     count_non_bigwin = 0  # Reset counter if a BigWin number is found
                     logger.info(f"Big Win found in result {result} (sum: {sum_result}), resetting counter")
