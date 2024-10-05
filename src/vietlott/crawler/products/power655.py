@@ -2,9 +2,6 @@ import os
 import math
 import gspread  
 from oauth2client.service_account import ServiceAccountCredentials
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
@@ -70,39 +67,6 @@ class ProductPower655(BaseProduct):
 
     def __init__(self):
         super(ProductPower655, self).__init__()
-
-    def send_email(SoMuonDanh, count_non_bigwin, SoTour):
-        # Get email credentials from environment variables
-        logger.info("Email preparing!")
-
-        email_user = os.environ.get('EMAIL_USER')
-        email_password = os.environ.get('EMAIL_PASSWORD')
-
-        if not email_user or not email_password:
-            logger.error("Email credentials are missing!")
-            return
-
-        # Set up the email details
-        subject = "Tour Notification - Big Win!"
-        body = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
-
-        # Prepare email
-        msg = MIMEMultipart()
-        msg['From'] = email_user
-        msg['To'] = 'ngocphuong.hoangkim@gmail.com'  # Replace with the actual recipient's email
-        msg['Subject'] = subject
-        msg.attach(MIMEText(body, 'plain'))
-
-        try:
-            # Setup SMTP server connection
-            with smtplib.SMTP('smtp.gmail.com', 587) as server:
-                server.starttls()
-                server.login(email_user, email_password)
-                text = msg.as_string()
-                server.sendmail(email_user, 'ngocphuong.hoangkim@gmail.com', text)
-                logger.info("Email sent successfully!")
-        except Exception as e:
-            logger.error(f"Failed to send email: {e}")
 
     def process_result(self, params, body, res_json, task_data) -> List[Dict]:
         """
@@ -283,13 +247,11 @@ class ProductPower655(BaseProduct):
         logger.info(f"Config values - SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
 
 
-        
+
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
         max_length = 100
         truncated_rss = current_data["result"]  # Select the last 50 rows
-        self.send_email(SoMuonDanh, count_non_bigwin, SoTour)
-        
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
                 result = truncated_rss.iloc[i]  # Get the current result
@@ -310,9 +272,7 @@ class ProductPower655(BaseProduct):
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 1) >= SoTour:
                     if i == len(truncated_rss) - 1 and (count_non_bigwin + 1) == SoTour:
-                        logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
-                        self.send_email(SoMuonDanh, count_non_bigwin, SoTour)
-
+                            logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
                     # else:
                     #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
 
