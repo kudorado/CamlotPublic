@@ -75,7 +75,7 @@ class ProductPower655(BaseProduct):
     def __init__(self):
         super(ProductPower655, self).__init__()
 
-    def send_email(SoMuonDanh, count_non_bigwin, SoTour):
+    def send_email(self, SoMuonDanh, count_non_bigwin, SoTour):
         # Get email credentials from environment variables
         email_user = os.environ.get('EMAIL_USER')
         email_password = os.environ.get('EMAIL_PASSWORD')
