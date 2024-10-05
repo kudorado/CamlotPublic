@@ -1,2 +1,2 @@
-SoTour=6
+SoTour=3
 SoMuonDanh=4
