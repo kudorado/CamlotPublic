@@ -188,7 +188,7 @@ class ProductPower655(BaseProduct):
         df_take = None  # Initialize df_take with a default value
         # store data
         if self.product_config.raw_path.exists():
-            current_data = pd.read_json(crawled
+            current_data = pd.read_json(
                 self.product_config.raw_path, lines=True, dtype=self.stored_data_dtype
             )
             logger.info(
