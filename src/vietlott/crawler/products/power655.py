@@ -271,10 +271,10 @@ class ProductPower655(BaseProduct):
 
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 1) >= SoTour:
-                    if i == len(truncated_rss) - 1:
+                    if i == len(truncated_rss) - 1 and (count_non_bigwin + 1) == SoTour:
                         logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
-                    else:
-                        logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
+                    # else:
+                    #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
 
                 if is_big_win:
                     count_non_bigwin = 0  # Reset counter after logging
