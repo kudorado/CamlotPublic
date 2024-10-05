@@ -75,7 +75,7 @@ class ProductPower655(BaseProduct):
     def __init__(self):
         super(ProductPower655, self).__init__()
 
-    def send_email(self, SoMuonDanh, count_non_bigwin, SoTour):
+    def send_email(self, SoMuonDanh, count_non_bigwin, SoTour, Data):
         # Get email credentials from environment variables
         email_user = os.environ.get('EMAIL_USER')
         email_password = os.environ.get('EMAIL_PASSWORD')
@@ -85,8 +85,8 @@ class ProductPower655(BaseProduct):
             return
 
         # Set up the email details
-        subject = "Tour Notification - Big Win!"
-        body = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
+        subject = "Giờ cơm đến rồi!"
+        body = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour} \n Dữ liệu: {Data}"
 
         # Prepare email
         msg = MIMEMultipart()
@@ -151,7 +151,6 @@ class ProductPower655(BaseProduct):
         :param index_to: the earliest page we want to crawl, default = 1 (1 page)
             if null then using default index_to in product's config
         """
-        self.send_email(0, 0, 0)
 
         if index_to is None:
             index_to = self.product_config.default_index_to
@@ -291,28 +290,38 @@ class ProductPower655(BaseProduct):
         logger.info(f"rss leng {len(rss)}")
         max_length = 100
         truncated_rss = current_data["result"]  # Select the last 50 rows
+        camlot_data = ""
+        cur_info = ""
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
                 result = truncated_rss.iloc[i]  # Get the current result
                 sum_result = sum(result)    
-
+                cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}"
+                camlot_data += cur_info + "\n"
                 # Log the current result for debugging purposes
-                logger.info(f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}" )
+                logger.info(cur_info)
                 is_big_win = sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3)
 
                 # Check if any of the results are in the BigWin list
                 if is_big_win:
                     count_non_bigwin = 0  # Reset counter if a BigWin number is found
-                    logger.info(f"{count_non_bigwin}/{SoTour}")
+                    cur_info = f"{count_non_bigwin}/{SoTour}"
+                    logger.info(cur_info)
                 else:
                     count_non_bigwin += 1  # Increment counter if no BigWin is found
-                    logger.info(f"{count_non_bigwin}/{SoTour}")
+                    cur_info = f"{count_non_bigwin}/{SoTour}"
+                    logger.info(cur_info)
+
+                camlot_data += cur_info + "\n"
 
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 1) >= SoTour:
                     if i == len(truncated_rss) - 1 and (count_non_bigwin + 1) == SoTour:
-                        logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
-                        self.send_email(SoMuonDanh, count_non_bigwin, SoTour)
+                        cur_info = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
+                        camlot_data += cur_info + "\n"
+
+                        logger.info(cur_info)
+                        self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
     
                     # else:
                     #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
@@ -320,6 +329,8 @@ class ProductPower655(BaseProduct):
                 if is_big_win:
                     count_non_bigwin = 0  # Reset counter after logging
                     
+                    
+        self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
 
         #     for di in range(l):
         #         # rv = sheet.row_count
