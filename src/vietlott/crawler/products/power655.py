@@ -251,7 +251,7 @@ class ProductPower655(BaseProduct):
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
         max_length = 100
-        truncated_rss = rss  # Select the last 50 rows
+        truncated_rss = df_take  # Select the last 50 rows
         if self.name == "bingo":
             for i in range(len(truncated_rss)):
                 result = truncated_rss.iloc[i]  # Get the current result
