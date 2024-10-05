@@ -224,6 +224,7 @@ class ProductPower655(BaseProduct):
         l = len(ids)
         vip = l - 1
         ar = []
+        count_non_bigwin = 0  # Initialize the counter outside the loop
 
         logger.info(f'total ID crawl: {len(ids)}')
         logger.info(f'Dick Iz: {self.name}')
@@ -251,15 +252,19 @@ class ProductPower655(BaseProduct):
 
         if self.name == "bingo":
             for i in range(len(rss)):
-                result = rss.iloc[i]  # Get the current result
+                result = rss.iloc[i].tolist()  # Get the current result and convert to a list
 
                 # Log the current result for debugging purposes
                 logger.info(f"Processing result {i+1}/{len(rss)}: {result}")
 
-                # Check if any of the results are in the BigWin list
-                if any(num in BigWin for num in result):
+                # Calculate the sum of the result numbers
+                sum_result = sum(result)
+                logger.info(f"Sum of result {result} is {sum_result}")
+
+                # Check if the sum is in the BigWin list
+                if sum_result in BigWin:
                     count_non_bigwin = 0  # Reset counter if a BigWin number is found
-                    logger.info(f"Big Win found in result {result}, resetting counter")
+                    logger.info(f"Big Win found in result {result} (sum: {sum_result}), resetting counter")
                 else:
                     count_non_bigwin += 1  # Increment counter if no BigWin is found
                     logger.info(f"count_non_bigwin incremented to {count_non_bigwin}")
