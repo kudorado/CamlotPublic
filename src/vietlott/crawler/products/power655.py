@@ -86,7 +86,7 @@ class ProductPower655(BaseProduct):
 
         # Set up the email details
         subject = "Giờ cơm đến rồi!"
-        body = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour} \n Dữ liệu: {Data}"
+        body = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}\nDữ liệu:\n{Data}"
 
         # Prepare email
         msg = MIMEMultipart()
