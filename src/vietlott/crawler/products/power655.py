@@ -3,6 +3,11 @@ import math
 import gspread  
 from oauth2client.service_account import ServiceAccountCredentials
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
@@ -65,8 +70,41 @@ class ProductPower655(BaseProduct):
 
     product_config: Optional[ProductConfig] = None
 
+    
+
     def __init__(self):
         super(ProductPower655, self).__init__()
+
+    def send_email():
+        # Get the email and password from environment variables
+        email_user = os.environ.get('EMAIL_USER')
+        email_password = os.environ.get('EMAIL_PASSWORD')
+
+        if not email_user or not email_password:
+            raise ValueError("Email credentials are missing!")
+
+        # Specify the email details
+        subject = "Notification from GitHub Action"
+        body = "Dô ăn cơm bạn ei, Đánh con: ... cho tôi, bao ăn..."
+
+        # Set up the email content
+        msg = MIMEMultipart()
+        msg['From'] = email_user
+        msg['To'] = 'ngocphuong.hoangkim@gmail.com'  # Change this to the recipient's email
+        msg['Subject'] = subject
+
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Set up the SMTP server and send the email
+        try:
+            with smtplib.SMTP('smtp.gmail.com', 587) as server:
+                server.starttls()
+                server.login(email_user, email_password)
+                text = msg.as_string()
+                server.sendmail(email_user, 'ngocphuong.hoangkim@gmail.com', text)
+                print("Email sent successfully!")
+        except Exception as e:
+            print(f"Error sending email: {e}")
 
     def process_result(self, params, body, res_json, task_data) -> List[Dict]:
         """
@@ -246,7 +284,7 @@ class ProductPower655(BaseProduct):
 
         logger.info(f"Config values - SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
 
-
+        self.send_email(SoMuonDanh, count_non_bigwin, SoTour)
 
         # Example: Get SoTour and SoMuonDanh from the config
         logger.info(f"rss leng {len(rss)}")
@@ -272,7 +310,9 @@ class ProductPower655(BaseProduct):
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 1) >= SoTour:
                     if i == len(truncated_rss) - 1 and (count_non_bigwin + 1) == SoTour:
-                            logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
+                        logger.info(f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}")
+                        self.send_email(SoMuonDanh, count_non_bigwin, SoTour)
+    
                     # else:
                     #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
 
