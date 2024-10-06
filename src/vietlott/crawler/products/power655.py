@@ -299,38 +299,39 @@ class ProductPower655(BaseProduct):
                 cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}"
                 camlot_data += cur_info + "\n"
                 # Log the current result for debugging purposes
-                logger.info(cur_info)
+                # logger.info(cur_info)
                 is_big_win = sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3)
 
                 # Check if any of the results are in the BigWin list
                 if is_big_win:
                     count_non_bigwin = 0  # Reset counter if a BigWin number is found
                     cur_info = f"{count_non_bigwin}/{SoTour}"
-                    logger.info(cur_info)
+                    # logger.info(cur_info)
                 else:
                     count_non_bigwin += 1  # Increment counter if no BigWin is found
                     cur_info = f"{count_non_bigwin}/{SoTour}"
-                    logger.info(cur_info)
+                    # logger.info(cur_info)
 
                 camlot_data += cur_info + "\n"
 
                 # Check if the counter reaches SoTour
                 if (count_non_bigwin + 3) >= SoTour:
-                    if i == len(truncated_rss) - 1 and (count_non_bigwin + 3) == SoTour:
+                    if i == len(truncated_rss) - 1 and ((count_non_bigwin + 3) == SoTour or (count_non_bigwin + 2) == SoTour):
                         cur_info = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
                         camlot_data += cur_info + "\n"
-
-                        logger.info(cur_info)
+                        # logger.info(cur_info)
                         self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
-    
                     else:
                         camlot_data = "" 
-                    #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
 
+
+                    #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
+                
                 if is_big_win:
                     count_non_bigwin = 0  # Reset counter after logging
                     
-                    
+            logger.info(camlot_data)
+         
         # self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
 
         #     for di in range(l):
