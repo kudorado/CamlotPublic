@@ -2,9 +2,8 @@ name: Automatic cào data
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Every minute
+    - cron: '*/5 * * * *' # Every 5 minutes
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,14 +14,28 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set timezone to Ho Chi Minh (UTC+7)
+        run: |
+          TZ="Asia/Ho_Chi_Minh"
+          current_hour=$(date +"%H")
+          if [ "$current_hour" -ge 22 ] || [ "$current_hour" -lt 6 ]; then
+            echo "Job skipped. Time is between 10 PM and 6 AM HCM."
+            exit 0
+          else
+            echo "Proceeding with the job."
+          fi
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
+
       - name: Install dependencies
         run: |
           python -m pip install -r requirements.txt
+
       - name: Run script with Google credentials
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}  # Pass the secret as an environment variable
