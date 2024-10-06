@@ -21,12 +21,13 @@ jobs:
           echo "Current hour in HCM timezone: $current_hour"
           if [ "$current_hour" -ge 22 ] || [ "$current_hour" -lt 6 ]; then
             echo "Job skipped. Time is between 10 PM and 6 AM HCM."
-            exit 0
+            exit 1
           else
             echo "Proceeding with the job."
           fi
-
-
+          
+        continue-on-error: false  # Ensure the job stops if the script exits
+        
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
