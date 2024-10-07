@@ -1,2 +1,0 @@
-SoTour=19
-SoMuonDanh=0

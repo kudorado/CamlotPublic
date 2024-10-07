@@ -340,8 +340,7 @@ class ProductPower655(BaseProduct):
                                 camlot_data += cur_info + "\n"
                                 self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
                         else:
-                            if is_big_win:
-                                camlot_data = ""  # old tour
+                            camlot_data = ""  # old tour
                             # logger.info(f"Reset camlot data: {i}")
 
                     # Reset the counter after logging if a BigWin is found
