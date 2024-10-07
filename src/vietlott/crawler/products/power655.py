@@ -328,7 +328,6 @@ class ProductPower655(BaseProduct):
                         count_non_bigwin += 1  # Increment counter if no BigWin is found
                         cur_tour = f"{count_non_bigwin}/{SoTour}"
 
-
                     cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result} | {cur_tour}"
                     camlot_data += cur_info + "\n"
 
@@ -341,6 +340,7 @@ class ProductPower655(BaseProduct):
                             self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
                         else:
                             camlot_data = ""  # Clear data if conditions aren't met
+                            logger.info(f"Reset camlot data: {i}")
 
                     # Reset the counter after logging if a BigWin is found
                     if is_big_win:
