@@ -2,6 +2,7 @@ import os
 import math
 import gspread  
 from oauth2client.service_account import ServiceAccountCredentials
+import json
 
 import smtplib
 from email.mime.text import MIMEText
@@ -268,69 +269,150 @@ class ProductPower655(BaseProduct):
 
         logger.info(f'total ID crawl: {len(ids)}')
         logger.info(f'Dick Iz: {self.name}')
-        config_file = "data/KeHoach.txt"
-        SoTour = 0
-        SoMuonDanh = 0
+
+        config_file = "data/KeHoach.jsonl"
+        config_pairs = []  # Store pairs of SoTour and SoMuonDanh
+
+        # Load the JSONL file with pairs of SoTour and SoMuonDanh
         try:
             with open(config_file, "r") as file:
                 for line in file:
-                    if "SoTour=" in line:
-                        SoTour = int(line.strip().split("=")[1])
-                    elif "SoMuonDanh=" in line:
-                        SoMuonDanh = int(line.strip().split("=")[1])
+                    try:
+                        # Parse each line as a JSON object
+                        record = json.loads(line.strip())
+                        SoTour = record.get("SoTour")
+                        SoMuonDanh = record.get("SoMuonDanh")
+                        config_pairs.append((SoTour, SoMuonDanh))
+                    except json.JSONDecodeError as e:
+                        logger.error(f"Error decoding JSON: {e}")
         except FileNotFoundError:
             logger.error(f"Configuration file {config_file} not found.")
-        except ValueError:
-            logger.error("Error parsing integer values from the configuration file.")
 
-        logger.info(f"Config values - SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
+        logger.info(f"Loaded {len(config_pairs)} pairs from the config file.")
 
+        # Example: Log the configuration values
+        for pair in config_pairs:
+            logger.info(f"Config values - SoTour: {pair[0]}, SoMuonDanh: {pair[1]}")
 
-        # Example: Get SoTour and SoMuonDanh from the config
+        # Example: RSS processing logic
         logger.info(f"rss leng {len(rss)}")
         max_length = 100
         truncated_rss = current_data["result"]  # Select the last 50 rows
         camlot_data = ""
         cur_info = ""
+
+        # If this is specific to "bingo" (adjust as per your actual logic)
         if self.name == "bingo":
-            for i in range(len(truncated_rss)):
-                result = truncated_rss.iloc[i]  # Get the current result
-                sum_result = sum(result)    
-                cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}"
-                camlot_data += cur_info + "\n"
-                # Log the current result for debugging purposes
-                # logger.info(cur_info)
-                is_big_win = sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3)
+                # Outer loop for each configuration pair of SoTour and SoMuonDanh
+            for SoTour, SoMuonDanh in config_pairs:
+                logger.info(f"Processing with SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
 
-                # Check if any of the results are in the BigWin list
-                if is_big_win:
-                    count_non_bigwin = 0  # Reset counter if a BigWin number is found
-                    cur_info = f"{count_non_bigwin}/{SoTour}"
-                    # logger.info(cur_info)
-                else:
-                    count_non_bigwin += 1  # Increment counter if no BigWin is found
-                    cur_info = f"{count_non_bigwin}/{SoTour}"
-                    # logger.info(cur_info)
+                count_non_bigwin = 0  # Initialize counter for non-BigWin results
+                cur_info = ""
 
-                camlot_data += cur_info + "\n"
-
-                # Check if the counter reaches SoTour
-                if (count_non_bigwin + 3) >= SoTour:
-                    if i == len(truncated_rss) - 1 and ((count_non_bigwin + 3) == SoTour or (count_non_bigwin + 2) == SoTour):
-                        cur_info = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
-                        camlot_data += cur_info + "\n"
-                        # logger.info(cur_info)
-                        self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
-                    else:
-                        camlot_data = "" 
-
-
-                    #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
-                
-                if is_big_win:
-                    count_non_bigwin = 0  # Reset counter after logging
+                # Loop through truncated RSS results
+                for i in range(len(truncated_rss)):
+                    result = truncated_rss.iloc[i]  # Get the current result
+                    sum_result = sum(result)
+                    cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}"
+                    camlot_data += cur_info + "\n"
                     
-            logger.info(camlot_data)
+                    # Check for BigWin
+                    is_big_win = sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3)
+
+                    # If there's a BigWin, reset the counter
+                    if is_big_win:
+                        count_non_bigwin = 0  # Reset counter if a BigWin number is found
+                        cur_info = f"{count_non_bigwin}/{SoTour}"
+                    else:
+                        count_non_bigwin += 1  # Increment counter if no BigWin is found
+                        cur_info = f"{count_non_bigwin}/{SoTour}"
+
+                    camlot_data += cur_info + "\n"
+
+                    # Check if the counter reaches SoTour threshold
+                    if (count_non_bigwin + 3) >= SoTour:
+                        # Check if this is the last result and conditions are met
+                        if i == len(truncated_rss) - 1 and ((count_non_bigwin + 3) == SoTour or (count_non_bigwin + 2) == SoTour):
+                            cur_info = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
+                            camlot_data += cur_info + "\n"
+                            self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
+                        else:
+                            camlot_data = ""  # Clear data if conditions aren't met
+
+                    # Reset the counter after logging if a BigWin is found
+                    if is_big_win:
+                        count_non_bigwin = 0
+
+                # Log all accumulated data for the current config pair
+                logger.info(camlot_data)
+
+                # Clear camlot_data for the next configuration pair
+                camlot_data = ""
+
+        # config_file = "data/KeHoach.txt"
+        # SoTour = 0
+        # SoMuonDanh = 0
+        # try:
+        #     with open(config_file, "r") as file:
+        #         for line in file:
+        #             if "SoTour=" in line:
+        #                 SoTour = int(line.strip().split("=")[1])
+        #             elif "SoMuonDanh=" in line:
+        #                 SoMuonDanh = int(line.strip().split("=")[1])
+        # except FileNotFoundError:
+        #     logger.error(f"Configuration file {config_file} not found.")
+        # except ValueError:
+        #     logger.error("Error parsing integer values from the configuration file.")
+
+        # logger.info(f"Config values - SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
+
+
+        # # Example: Get SoTour and SoMuonDanh from the config
+        # logger.info(f"rss leng {len(rss)}")
+        # max_length = 100
+        # truncated_rss = current_data["result"]  # Select the last 50 rows
+        # camlot_data = ""
+        # cur_info = ""
+        # if self.name == "bingo":
+        #     for i in range(len(truncated_rss)):
+        #         result = truncated_rss.iloc[i]  # Get the current result
+        #         sum_result = sum(result)    
+        #         cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}"
+        #         camlot_data += cur_info + "\n"
+        #         # Log the current result for debugging purposes
+        #         # logger.info(cur_info)
+        #         is_big_win = sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3)
+
+        #         # Check if any of the results are in the BigWin list
+        #         if is_big_win:
+        #             count_non_bigwin = 0  # Reset counter if a BigWin number is found
+        #             cur_info = f"{count_non_bigwin}/{SoTour}"
+        #             # logger.info(cur_info)
+        #         else:
+        #             count_non_bigwin += 1  # Increment counter if no BigWin is found
+        #             cur_info = f"{count_non_bigwin}/{SoTour}"
+        #             # logger.info(cur_info)
+
+        #         camlot_data += cur_info + "\n"
+
+        #         # Check if the counter reaches SoTour
+        #         if (count_non_bigwin + 3) >= SoTour:
+        #             if i == len(truncated_rss) - 1 and ((count_non_bigwin + 3) == SoTour or (count_non_bigwin + 2) == SoTour):
+        #                 cur_info = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
+        #                 camlot_data += cur_info + "\n"
+        #                 # logger.info(cur_info)
+        #                 self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
+        #             else:
+        #                 camlot_data = "" 
+
+
+        #             #     logger.info(f"Old tour! Not the end yet, hold on! {count_non_bigwin}/{SoTour}")
+                
+        #         if is_big_win:
+        #             count_non_bigwin = 0  # Reset counter after logging
+                    
+        #     logger.info(camlot_data)
          
         # self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
 
