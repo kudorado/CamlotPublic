@@ -305,7 +305,7 @@ class ProductPower655(BaseProduct):
                 # Outer loop for each configuration pair of SoTour and SoMuonDanh
             for SoTour, SoMuonDanh in config_pairs:
                 logger.info(f"Processing with SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
-
+                logger.info(f"Truncated RSS length: {len(truncated_rss)}")
                 count_non_bigwin = 0  # Initialize counter for non-BigWin results
                 cur_info = ""
                 camlot_data = ""
