@@ -319,7 +319,6 @@ class ProductPower655(BaseProduct):
 
         # If this is specific to "bingo" (adjust as per your actual logic)
         if self.name == "bingo":
-            self.send_email("test", "test", "test", "tet")
                 # Outer loop for each configuration pair of SoTour and SoMuonDanh
             for SoTour, SoMuonDanh in config_pairs:
                 logger.info(f"Processing with SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
