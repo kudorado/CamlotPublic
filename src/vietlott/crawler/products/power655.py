@@ -107,6 +107,23 @@ class ProductPower655(BaseProduct):
         except Exception as e:
             logger.error(f"Failed to send email: {e}")
 
+        msg = MIMEMultipart()
+        msg['From'] = email_user
+        msg['To'] = 'vyvyle2684@gmail.com'  # Replace with the actual recipient's email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
+
+        try:
+            # Setup SMTP server connection
+            with smtplib.SMTP('smtp.gmail.com', 587) as server:
+                server.starttls()
+                server.login(email_user, email_password)
+                text = msg.as_string()
+                server.sendmail(email_user, 'vyvyle2684@gmail.com', text)
+                logger.info("Email sent successfully!")
+        except Exception as e:
+            logger.error(f"Failed to send email: {e}")
+
     def process_result(self, params, body, res_json, task_data) -> List[Dict]:
         """
         process 645/655 result
@@ -302,6 +319,7 @@ class ProductPower655(BaseProduct):
 
         # If this is specific to "bingo" (adjust as per your actual logic)
         if self.name == "bingo":
+            self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
                 # Outer loop for each configuration pair of SoTour and SoMuonDanh
             for SoTour, SoMuonDanh in config_pairs:
                 logger.info(f"Processing with SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
