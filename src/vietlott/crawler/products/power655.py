@@ -305,7 +305,7 @@ class ProductPower655(BaseProduct):
                 # Outer loop for each configuration pair of SoTour and SoMuonDanh
             for SoTour, SoMuonDanh in config_pairs:
                 logger.info(f"Processing with SoTour: {SoTour}, SoMuonDanh: {SoMuonDanh}")
-                logger.info(f"Truncated RSS length: {len(truncated_rss)}")
+                # logger.info(f"Truncated RSS length: {len(truncated_rss)}")
 
                 count_non_bigwin = 0  # Initialize counter for non-BigWin results
                 cur_info = ""
@@ -313,7 +313,7 @@ class ProductPower655(BaseProduct):
 
                 # Loop through truncated RSS results
                 for i in range(len(truncated_rss)):
-                    logger.info(f"Dick: {SoTour}, SoMuonDanh: {SoMuonDanh} | {i}")
+                    # logger.info(f"Dick: {SoTour}, SoMuonDanh: {SoMuonDanh} | {i}")
                     result = truncated_rss.iloc[i]  # Get the current result
                     sum_result = sum(result)
                     cur_tour = ""
