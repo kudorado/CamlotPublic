@@ -270,7 +270,7 @@ class ProductPower655(BaseProduct):
         logger.info(f'total ID crawl: {len(ids)}')
         logger.info(f'Dick Iz: {self.name}')
 
-        config_file = "data/KeHoach.jsonl"
+        config_file = "data/kehoach.jsonl"
         config_pairs = []  # Store pairs of SoTour and SoMuonDanh
 
         # Load the JSONL file with pairs of SoTour and SoMuonDanh
