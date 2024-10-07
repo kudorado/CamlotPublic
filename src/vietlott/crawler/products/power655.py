@@ -346,6 +346,7 @@ class ProductPower655(BaseProduct):
                     # Reset the counter after logging if a BigWin is found
                     if is_big_win:
                         count_non_bigwin = 0
+                        camlot_data = ""
 
                 logger.info(camlot_data)
 
