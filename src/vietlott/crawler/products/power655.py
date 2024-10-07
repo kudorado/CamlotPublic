@@ -334,12 +334,13 @@ class ProductPower655(BaseProduct):
                     # Check if the counter reaches SoTour threshold
                     if (count_non_bigwin + 3) >= SoTour:
                         # Check if this is the last result and conditions are met
-                        if i == len(truncated_rss) - 1 and ((count_non_bigwin + 3) == SoTour or (count_non_bigwin + 2) == SoTour):
-                            cur_info = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
-                            camlot_data += cur_info + "\n"
-                            self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
+                        if i == len(truncated_rss) - 1:
+                            if ((count_non_bigwin + 3) == SoTour or (count_non_bigwin + 2) == SoTour):
+                                cur_info = f"Dô ăn cơm bạn ei, Đánh con: {SoMuonDanh} cho tôi, bao ăn... {count_non_bigwin}/{SoTour}"
+                                camlot_data += cur_info + "\n"
+                                self.send_email(SoMuonDanh, count_non_bigwin, SoTour, camlot_data)
                         else:
-                            camlot_data = ""  # Clear data if conditions aren't met
+                            camlot_data = ""  # old tour
                             logger.info(f"Reset camlot data: {i}")
 
                     # Reset the counter after logging if a BigWin is found
