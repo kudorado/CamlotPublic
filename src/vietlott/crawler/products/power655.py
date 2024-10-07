@@ -309,6 +309,7 @@ class ProductPower655(BaseProduct):
 
                 count_non_bigwin = 0  # Initialize counter for non-BigWin results
                 cur_info = ""
+                camlot_data = ""
 
                 # Loop through truncated RSS results
                 for i in range(len(truncated_rss)):
@@ -343,12 +344,11 @@ class ProductPower655(BaseProduct):
                     # Reset the counter after logging if a BigWin is found
                     if is_big_win:
                         count_non_bigwin = 0
-
-                # Log all accumulated data for the current config pair
                 logger.info(camlot_data)
 
+                # Log all accumulated data for the current config pair
+
                 # Clear camlot_data for the next configuration pair
-                camlot_data = ""
 
         # config_file = "data/KeHoach.txt"
         # SoTour = 0
