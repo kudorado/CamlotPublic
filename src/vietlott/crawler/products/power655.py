@@ -295,7 +295,6 @@ class ProductPower655(BaseProduct):
             logger.info(f"Config values - SoTour: {pair[0]}, SoMuonDanh: {pair[1]}")
 
         # Example: RSS processing logic
-        logger.info(f"rss leng {len(rss)}")
         max_length = 100
         truncated_rss = current_data["result"]  # Select the last 50 rows
         camlot_data = ""
@@ -315,8 +314,7 @@ class ProductPower655(BaseProduct):
                 for i in range(len(truncated_rss)):
                     result = truncated_rss.iloc[i]  # Get the current result
                     sum_result = sum(result)
-                    cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result}"
-                    camlot_data += cur_info + "\n"
+                    cur_tour = ""
                     
                     # Check for BigWin
                     is_big_win = sum_result in BigWin or (len(set(result)) == 1 and len(result) == 3)
@@ -324,11 +322,13 @@ class ProductPower655(BaseProduct):
                     # If there's a BigWin, reset the counter
                     if is_big_win:
                         count_non_bigwin = 0  # Reset counter if a BigWin number is found
-                        cur_info = f"{count_non_bigwin}/{SoTour}"
+                        cur_tour = f"{count_non_bigwin}/{SoTour}"
                     else:
                         count_non_bigwin += 1  # Increment counter if no BigWin is found
-                        cur_info = f"{count_non_bigwin}/{SoTour}"
+                        cur_tour = f"{count_non_bigwin}/{SoTour}"
 
+
+                    cur_info = f"Processing result {i+1}/{len(truncated_rss)}: {result} => {sum_result} | {cur_tour}"
                     camlot_data += cur_info + "\n"
 
                     # Check if the counter reaches SoTour threshold
@@ -344,6 +344,8 @@ class ProductPower655(BaseProduct):
                     # Reset the counter after logging if a BigWin is found
                     if is_big_win:
                         count_non_bigwin = 0
+                        camlot_data = ""
+
                 logger.info(camlot_data)
 
                 # Log all accumulated data for the current config pair
