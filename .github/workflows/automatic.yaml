@@ -17,9 +17,9 @@ jobs:
 
       - name: Set timezone to Ho Chi Minh (UTC+7) and check time
         run: |
-          current_hour=$(TZ="Asia/Ho_Chi_Minh" date +"%H")
-          echo "Current hour in HCM timezone: $current_hour"
-           if [ "$current_hour" -ge 22 ] || { [ "$current_hour" -eq 5 ] && [ "$current_minute" -ge 50 ]; } || [ "$current_hour" -lt 5 ]; then
+          # current_hour=$(TZ="Asia/Ho_Chi_Minh" date +"%H")
+          # echo "Current hour in HCM timezone: $current_hour"
+           # if [ "$current_hour" -ge 22 ] || { [ "$current_hour" -eq 5 ] && [ "$current_minute" -ge 50 ]; } || [ "$current_hour" -lt 5 ]; then
             echo "Job skipped. Time is between 10 PM and 6 AM HCM."
             exit 1
            else
