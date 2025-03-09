@@ -1,35 +1,35 @@
-# This is a basic workflow that is manually triggered
+# # This is a basic workflow that is manually triggered
 
-name: Manual workflow SUDO
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
-on:
-  workflow_dispatch:
+# name: Manual workflow SUDO
+# # Controls when the action will run. Workflow runs when manually triggered using the UI
+# # or API.
+# on:
+#   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        python-version: [3.11.4]
+#     strategy:
+#       matrix:
+#         python-version: [3.11.4]
 
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: 'pip'
-      - name: Install dependencies
-        run: |
-          python -m pip install -r requirements.txt
-      - name: Run script with Google credentials
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}  # Pass the secret as an environment variable
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
-        run: |
-          bash ./bin/github_data.sh  # Make sure your script can handle the GOOGLE_CREDENTIALS variable
+#     steps:
+#       - uses: actions/checkout@v4
+#       - name: Set up Python ${{ matrix.python-version }}
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: ${{ matrix.python-version }}
+#           cache: 'pip'
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install -r requirements.txt
+#       - name: Run script with Google credentials
+#         env:
+#           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}  # Pass the secret as an environment variable
+#           EMAIL_USER: ${{ secrets.EMAIL_USER }}
+#           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+#         run: |
+#           bash ./bin/github_data.sh  # Make sure your script can handle the GOOGLE_CREDENTIALS variable
 
